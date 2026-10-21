@@ -96,5 +96,5 @@ This extension has the same behavior as the proposed `--verify` flag in [cli/cli
 Releases are immutable, and binaries are built with [`cli/gh-extension-precompile`](https://github.com/cli/gh-extension-precompile) and have build provenance, so you can check them with the extension itself:
 
 ```
-gh verify-download -R mrecachinas/gh-verify-download v0.1.1 -p '*darwin-arm64*'
+gh verify-download -R mrecachinas/gh-verify-download v0.1.2 -p '*darwin-arm64*'
 ```

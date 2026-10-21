@@ -468,6 +468,16 @@ func Test_run_assetNamedDashIsAFile(t *testing.T) {
 	assert.Equal(t, "content", string(got))
 }
 
+func Test_run_refusalMessage(t *testing.T) {
+	assets := []asset{{Name: "app.zip", URL: "https://api.github.com/assets/1", Digest: digestPtr("sha256:" + sum("hello"))}}
+	var stderr bytes.Buffer
+	err := run(&options{
+		Repo:    repository.Repository{Host: "github.com", Owner: "OWNER", Name: "REPO"},
+		TagName: testTag, AssetName: "app.zip", Destination: t.TempDir(), Concurrency: 1,
+	}, &env{api: newTestAPI(t, false, false, false, assets, nil), verifier: fakeVerifier{}, stdout: io.Discard, stderr: &stderr})
+	assert.EqualError(t, err, "refusing to download: 1 asset failed verification")
+}
+
 func Test_run_unsupportedHost(t *testing.T) {
 	err := run(&options{Repo: repository.Repository{Host: "ghes.example.com", Owner: "o", Name: "r"}}, &env{})
 	assert.EqualError(t, err, "`verify-download` is not supported for ghes.example.com: artifact attestations are not available on GitHub Enterprise Server")

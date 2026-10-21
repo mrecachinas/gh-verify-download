@@ -367,7 +367,7 @@ func (d *destination) write(name string, r io.Reader) error {
 
 // writeStdout refuses binary content bound for a terminal, and text containing
 // terminal escape sequences, unless --allow-escape-sequences is set. This
-// matches gh release download.
+// is the same safeguard gh applies to content written to standard output.
 func (d *destination) writeStdout(r io.Reader) error {
 	if d.allowEscapes {
 		_, err := io.Copy(d.stdout, r)

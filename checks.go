@@ -309,8 +309,7 @@ func confirmProvenance(e *env, c *checker, r *release, assets []asset) (map[stri
 
 	if !e.canPrompt {
 		if len(problems) > 0 {
-			return nil, fmt.Errorf("refusing to download: %s; run `gh release download` to download without verifying",
-				strings.Join(problems, " and "))
+			return nil, fmt.Errorf("refusing to download: %s", strings.Join(problems, " and "))
 		}
 		return digests, nil
 	}
